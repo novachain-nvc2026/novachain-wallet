@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOVACHAIN NVC Wallet</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080808;color:#fff;font-family:Arial,sans-serif;padding:20px}
+.app{max-width:430px;margin:auto}
+header{display:flex;align-items:center;gap:12px;margin:12px 0 28px}
+.logo{width:50px;height:50px;border:2px solid #e8bd52;border-radius:50%;display:grid;place-items:center;color:#e8bd52;font-weight:bold}
+h1{font-size:21px;color:#e8bd52;margin:0}
+.subtitle{font-size:12px;color:#aaa;margin-top:5px}
+.card{background:linear-gradient(145deg,#29200b,#111);border:1px solid #806324;border-radius:20px;padding:24px;margin-bottom:18px}
+.label{color:#bbb;font-size:13px}
+.balance{font-size:38px;font-weight:bold;color:#f4c75e;margin:12px 0}
+button{cursor:pointer;border:0;border-radius:12px;font-weight:bold;padding:14px}
+.coin{display:block;width:125px;height:125px;margin:24px auto;border-radius:50%;border:5px solid #ffe28a;background:radial-gradient(circle,#ffe69a,#bd8a20);color:#171109;font-size:26px;box-shadow:0 0 25px #c99a3344}
+.primary{width:100%;background:#e8bd52;color:#171109;font-size:16px}
+.stats{display:flex;gap:12px}
+.stat{flex:1;padding:15px;background:#151515;border:1px solid #333;border-radius:14px}
+.stat strong{display:block;color:#e8bd52;margin-top:8px}
+nav{display:flex;gap:5px;margin-top:24px}
+nav button{flex:1;padding:12px 4px;background:#191919;color:#e8bd52;font-size:11px}
+#message{text-align:center;color:#e8bd52;font-size:13px;min-height:18px}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+<div class="logo">NVC</div>
+<div><h1>NOVACHAIN</h1><div class="subtitle">YOUR DIGITAL POINTS WALLET</div></div>
+</header>
+
+<section class="card">
+<div class="label">Your NVC Points Balance</div>
+<div class="balance"><span id="balance">0</span> NVC</div>
+<div class="label">Pre-launch points · Not real cryptocurrency</div>
+<button class="coin" id="tap">NVC</button>
+<button class="primary" id="claim">TAP TO EARN +1</button>
+<p id="message">Welcome to NOVACHAIN!</p>
+</section>
+
+<div class="stats">
+<div class="stat"><span class="label">⚡ Energy</span><strong><span id="energy">1000</span> / 1000</strong></div>
+<div class="stat"><span class="label">👆 Total Taps</span><strong id="taps">0</strong></div>
+</div>
+
+<nav>
+<button onclick="showPage('Home')">Home</button>
+<button onclick="showPage('Wallet')">Wallet</button>
+<button onclick="showPage('Tasks')">Tasks</button>
+<button onclick="showPage('Friends')">Friends</button>
+<button onclick="showPage('Profile')">Profile</button>
+</nav>
+<p id="pageMessage" class="subtitle" style="text-align:center;margin-top:20px">Home · Start earning points</p>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+let balance = Number(localStorage.getItem("nvc_balance")) || 0;
+let energy = 1000;
+let taps = 0;
+
+$("balance").textContent = balance;
+
+function earnPoint(){
+  if(energy <= 0){
+    $("message").textContent = "No energy left. Wait for recovery!";
+    return;
+  }
+  balance += 1;
+  energy -= 1;
+  taps += 1;
+  localStorage.setItem("nvc_balance", String(balance));
+  $("balance").textContent = balance;
+  $("energy").textContent = energy;
+  $("taps").textContent = taps;
+  $("message").textContent = "+1 NVC Point earned!";
+}
+
+$("tap").addEventListener("click", earnPoint);
+$("claim").addEventListener("click", earnPoint);
+
+setInterval(() => {
+  if(energy < 1000){
+    energy += 1;
+    $("energy").textContent = energy;
+  }
+}, 3000);
+
+function showPage(page){
+  $("pageMessage").textContent = page + " · Demo screen";
+}
+</script>
+</body>
+</html>
