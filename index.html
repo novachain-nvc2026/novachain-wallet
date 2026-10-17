@@ -96,6 +96,20 @@ function showPage(page){
   $("pageMessage").textContent = page + " · Demo screen";
 }
 </script>
-<div id="ton-connect"></div>  
+<div id="ton-connect"></div> 
+ <script>
+  const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+    manifestUrl: 'https://novachain-nvc2026.github.io/novachain-wallet/tonconnect-manifest.json',
+    buttonRootId: 'ton-connect'
+  });
+
+  tonConnectUI.onStatusChange(wallet => {
+    if (wallet) {
+      console.log('TON wallet connected:', wallet.account.address);
+    } else {
+      console.log('TON wallet disconnected');
+    }
+  });
+</script> 
 </body>
 </html>
