@@ -49,15 +49,44 @@ nav button{flex:1;padding:12px 4px;background:#191919;color:#e8bd52;font-size:11
 <div class="stat"><span class="label">👆 Total Taps</span><strong id="taps">0</strong></div>
 </div>
 
-<nav>
-<button onclick="showPage('Home')">Home</button>
-<button onclick="showPage('Wallet')">Wallet</button>
-<button onclick="showPage('Tasks')">Tasks</button>
-<button onclick="showPage('Friends')">Friends</button>
-<button onclick="showPage('Profile')">Profile</button>
-</nav>
-<p id="pageMessage" class="subtitle" style="text-align:center;margin-top:20px">Home · Start earning points</p>
-</div>
+function showPage(page) {
+  const message = $("pageMessage");
+
+  const pages = {
+    Home: `
+      <h2>🏠 NOVACHAIN</h2>
+      <p>Start earning NVC Points!</p>
+      <p>Tap-to-Earn · Daily Rewards</p>
+    `,
+    Wallet: `
+      <h2>👛 NOVACHAIN Wallet</h2>
+      <p>Connect your TON wallet using the Connect Wallet button.</p>
+      <p>Network: TON Testnet</p>
+      <p>Token: NOV</p>
+      <p>Note: Points are not real NOV tokens.</p>
+    `,
+    Tasks: `
+      <h2>📋 Daily Tasks</h2>
+      <p>Daily login: 50 Points</p>
+      <p>Join our Telegram channel: 100 Points</p>
+      <p>Task rewards must be verified before claiming.</p>
+    `,
+    Friends: `
+      <h2>👥 Invite Friends</h2>
+      <p>Invite friends to join NOVACHAIN.</p>
+      <p>Referral rewards are not active yet.</p>
+    `,
+    Profile: `
+      <h2>👤 My Profile</h2>
+      <p>Welcome to NOVACHAIN!</p>
+      <p>Your account information will appear here.</p>
+    `
+  };
+
+  if (pages[page]) {
+    message.innerHTML = pages[page];
+  }
+}
 
 <script>
 const $ = id => document.getElementById(id);
